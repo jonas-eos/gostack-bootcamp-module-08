@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 /**
  * Main function to load the app
@@ -11,26 +11,37 @@ export default function App() {
    * State that containt techs
    * @const
    */
-  const [techs, setTech] = useState([
-    {
-      id: 1,
-      name: 'ReactJs',
-    },
-    {
-      id: 2,
-      name: 'React Native',
-    },
-    {
-      id: 3,
-      name: 'Node.js',
-    },
-  ]);
+  const [techs, setTech] = useState([]);
 
   /**
    * State that are used for insert new tech
    * @const
    */
   const [newTech, setNewTech] = useState('');
+
+  /**
+   * Corresponds to componentDidMount.
+   * We define the function that will be executed
+   * The blank state means that the component will be monitored on mount event.
+   * @function
+   */
+  useEffect(() => {
+    const storageTechs = localStorage.getItem('techs');
+
+    if (storageTechs) {
+      setTech(JSON.parse(storageTechs));
+    }
+  }, []);
+
+  /**
+   * Save tech to localStorage.
+   * The techs state is monitored here, with each change in this state, the
+   * function is triggered.
+   * @function
+   */
+  useEffect(() => {
+    localStorage.setItem('techs', JSON.stringify(techs));
+  }, [techs]);
 
   /**
    * Handler to Manipulates the process for saving new information to tech state
@@ -52,6 +63,7 @@ export default function App() {
 
   return (
     <section>
+      <h1>{newTech || 'tech'}</h1>
       <ul>
         {techs.map(tech => (
           <li key={tech.id}>{tech.name}</li>
