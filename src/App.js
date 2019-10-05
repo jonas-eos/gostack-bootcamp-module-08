@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
 /**
  * Main function to load the app
@@ -18,6 +18,24 @@ export default function App() {
    * @const
    */
   const [newTech, setNewTech] = useState('');
+
+  /**
+   * Handler to Manipulates the process for saving new information to tech state
+   * the new tech id must be equal to the length + 1 of the tech state
+   * The new tech state must be reset to reset the input too.
+   * This const get as return the result of useCallBack.
+   * @const
+   */
+  const handleAddTech = useCallback(() => {
+    setTech([
+      ...techs,
+      {
+        id: techs.length + 1,
+        name: newTech,
+      },
+    ]);
+    setNewTech('');
+  }, [newTech, techs]);
 
   /**
    * Corresponds to componentDidMount.
@@ -45,24 +63,6 @@ export default function App() {
 
   /** Get the techs length, and monitor techs state */
   const techSize = useMemo(() => techs.length, [techs]);
-
-  /**
-   * Handler to Manipulates the process for saving new information to tech state
-   * the new tech id must be equal to the length + 1 of the tech state
-   * The new tech state must be reset to reset the input too.
-   * @const
-   * @function
-   */
-  const handleAddTech = () => {
-    setTech([
-      ...techs,
-      {
-        id: techs.length + 1,
-        name: newTech,
-      },
-    ]);
-    setNewTech('');
-  };
 
   return (
     <section>
