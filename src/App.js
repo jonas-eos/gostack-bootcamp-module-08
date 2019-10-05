@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 /**
  * Main function to load the app
@@ -43,6 +43,9 @@ export default function App() {
     localStorage.setItem('techs', JSON.stringify(techs));
   }, [techs]);
 
+  /** Get the techs length, and monitor techs state */
+  const techSize = useMemo(() => techs.length, [techs]);
+
   /**
    * Handler to Manipulates the process for saving new information to tech state
    * the new tech id must be equal to the length + 1 of the tech state
@@ -69,6 +72,9 @@ export default function App() {
           <li key={tech.id}>{tech.name}</li>
         ))}
       </ul>
+      <br />
+      <strong>You know {techSize} techs!</strong>
+      <br />
       <input
         type="text"
         value={newTech}
