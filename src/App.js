@@ -1,11 +1,7 @@
-import React from "react";
+import React from 'react';
 
 function App() {
-  return (
-    <header className="App">
-      <h1>Hello world</h1>
-    </header>
-  );
+  return <h1>Hello world</h1>;
 }
 
 export default App;
